@@ -7,11 +7,11 @@ export class PlaybackStateClass {
     public playState: boolean = false,
     public playbackTime: string = '00:00',
     public playbackSpeed: string = '1.00',
-    public videofileTitle: string = 'None'
+    public videofilename: string = 'None'
   ) {}
 
   // custom log statement.
   [util.inspect.custom]() {
-    return `PlayState : ${this.playState}\nPlaybackTime : ${this.playbackTime}\nPlaybackSpeed : ${this.playbackSpeed}\nVideoFileTitle : ${this.videofileTitle}`;
+    return `PlayState : ${this.playState}\nPlaybackTime : ${this.playbackTime}\nPlaybackSpeed : ${this.playbackSpeed}\nVideoFileTitle : ${this.videofilename}`;
   }
 }
