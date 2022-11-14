@@ -30,12 +30,12 @@ export const connect = (req: Request, res: Response) => {
   if (connections[connectID] !== undefined) {
     res
       .status(200)
-      .json({ state: 'already connected', file: playbackState.videofilename });
+      .json({ state: 'Success', file: playbackState.videofilename });
   } else {
     connections[connectID] = true;
     res
       .status(201)
-      .json({ state: 'new connected', file: playbackState.videofilename });
+      .json({ state: 'Success', file: playbackState.videofilename });
   }
 };
 
