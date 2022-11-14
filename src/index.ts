@@ -5,6 +5,7 @@ import {
   setTime,
   setPlaybackSpeed,
   setFileName,
+  connect,
 } from './lib/callbackHandler.js';
 import express from 'express';
 import morgan from 'morgan';
@@ -17,11 +18,23 @@ const app = express();
 app.use(morgan('dev'));
 
 // Routes
-app.get('/', getAll);
-app.get('/playpause', playPause);
-app.post('/settime/:time', setTime);
-app.post('/setplaybackspeed/:speed', setPlaybackSpeed);
-app.post('/setfilename/:filename', setFileName);
+// pulling changes
+app.get('/:connectID', getAll);
+
+// new user connected
+app.post('/:connectID', connect);
+
+// play or pause
+app.get('/playpause/:connectID', playPause);
+
+// change play back time
+app.get('/settime/:connectID/:time', setTime);
+
+// change playback speed
+app.get('/setplaybackspeed/:connectID/:speed', setPlaybackSpeed);
+
+// change video file name
+app.get('/setfilename/:connectID/:filename', setFileName);
 
 // listening.
 app.listen(PORT, () => console.log('Listening...'));
