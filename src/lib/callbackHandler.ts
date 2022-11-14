@@ -13,7 +13,7 @@ export const playPause = (req: Request, res: Response) => {
 };
 
 export const setTime = (req: Request, res: Response) => {
-  const { time } = req.params;
+  const time = req.params.time;
   if (!time) {
     res.status(418).send('Time parameter was empty.');
   }
@@ -22,7 +22,7 @@ export const setTime = (req: Request, res: Response) => {
 };
 
 export const setPlaybackSpeed = (req: Request, res: Response) => {
-  const { speed } = req.params;
+  const speed = req.params.speed;
   if (!speed) {
     res.status(418).json('Speed parameter was empty.');
   }
@@ -31,7 +31,7 @@ export const setPlaybackSpeed = (req: Request, res: Response) => {
 };
 
 export const setFileName = (req: Request, res: Response) => {
-  const { filename } = req.params;
+  const filename = req.params.filename;
   if (!filename) {
     res.status(418).json('FIlename parameter was empty.');
   }
