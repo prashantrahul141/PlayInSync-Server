@@ -11,7 +11,7 @@ import express from 'express';
 import morgan from 'morgan';
 
 // constants
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // init.
 const app = express();
