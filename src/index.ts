@@ -19,6 +19,14 @@ const PORT = process.env.PORT || 3000;
 // init.
 const app = express();
 app.use(morgan('dev'));
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 
 // Routes
 // pulling changes
@@ -44,6 +52,7 @@ app.get('/allviewers/:connectID', getViewers);
 
 // delete all viwers.
 app.get('/deleteall/:connectID', deleteAllViewers);
+
 // listening.
 // @ts-ignore
 app.listen(PORT, '0.0.0.0', () => console.log('Listening...', PORT));

@@ -9,6 +9,11 @@ const PORT = process.env.PORT || 3000;
 // init.
 const app = express();
 app.use(morgan('dev'));
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 // Routes
 // pulling changes
 app.get('/:connectID', getAll);
