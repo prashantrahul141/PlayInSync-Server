@@ -9,10 +9,11 @@ import {
 } from './lib/callbackHandler.js';
 import express from 'express';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // constants
 const PORT = process.env.PORT || 3000;
-
 // init.
 const app = express();
 app.use(morgan('dev'));
@@ -37,4 +38,5 @@ app.get('/setplaybackspeed/:connectID/:speed', setPlaybackSpeed);
 app.get('/setfilename/:connectID/:filename', setFileName);
 
 // listening.
-app.listen(PORT, () => console.log('Listening...'));
+// @ts-ignore
+app.listen(PORT, '0.0.0.0', () => console.log('Listening...', PORT));
