@@ -9,7 +9,7 @@ import {
   getViewers,
   deleteAllViewers,
 } from './lib/callbackHandler.js';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -19,7 +19,8 @@ const PORT = process.env.PORT || 3000;
 // init.
 const app = express();
 app.use(morgan('dev'));
-app.use(function (req, res, next) {
+app.use(function (req: Request, res: Response, next: NextFunction) {
+  // adds cors
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
