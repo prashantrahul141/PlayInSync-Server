@@ -6,6 +6,8 @@ import {
   setPlaybackSpeed,
   setFileName,
   connect,
+  getViewers,
+  deleteAllViewers,
 } from './lib/callbackHandler.js';
 import express from 'express';
 import morgan from 'morgan';
@@ -37,6 +39,11 @@ app.get('/setplaybackspeed/:connectID/:speed', setPlaybackSpeed);
 // change video file name
 app.get('/setfilename/:connectID/:filename', setFileName);
 
+// get all viwers.
+app.get('/allviewers/:connectID', getViewers);
+
+// delete all viwers.
+app.get('/deleteall/:connectID', deleteAllViewers);
 // listening.
 // @ts-ignore
 app.listen(PORT, '0.0.0.0', () => console.log('Listening...', PORT));

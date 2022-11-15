@@ -106,3 +106,14 @@ export const setFileName = (req: Request, res: Response) => {
   playbackState.videofilename = filename;
   res.status(200).json({ state: 'Success', ...playbackState });
 };
+
+export const getViewers = (req: Request, res: Response) => {
+  //returns all currently connected viewers
+  res.status(200).json({ state: 'Success', connections });
+};
+
+export const deleteAllViewers = (req: Request, res: Response) => {
+  // deletes the connections object.
+  connections = {};
+  res.status(200).json({ state: 'Success', message: 'Deleted all viewers.' });
+};
