@@ -4,9 +4,9 @@ import util from 'util';
 export class PlaybackStateClass {
   // Constructor
   constructor(
-    public playState: boolean = false,
-    public playbackTime: string = '00:00',
-    public playbackSpeed: string = '1.00',
+    public playState: boolean = true,
+    public playbackTime: string = '0',
+    public playbackSpeed: string = '1',
     public videofilename: string = 'None'
   ) {}
 

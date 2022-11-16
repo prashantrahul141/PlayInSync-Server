@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(morgan('dev'));
 app.use(function (req, res, next) {
+    // adds cors
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
