@@ -5,8 +5,8 @@ export class PlaybackStateClass {
   // Constructor
   constructor(
     public playState: boolean = true,
-    public playbackTime: string = '0',
-    public playbackSpeed: string = '1',
+    public playbackTime: number = 0,
+    public playbackSpeed: number = 1,
     public videofilename: string = 'None'
   ) {}
 

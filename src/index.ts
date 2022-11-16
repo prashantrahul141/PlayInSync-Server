@@ -1,9 +1,7 @@
 // imports
 import {
   getAll,
-  playPause,
-  setTime,
-  setPlaybackSpeed,
+  onUpdate,
   setFileName,
   connect,
   getViewers,
@@ -28,6 +26,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   );
   next();
 });
+app.use(express.json());
 
 // Routes
 // pulling changes
@@ -36,14 +35,8 @@ app.get('/:connectID', getAll);
 // new user connected
 app.post('/:connectID', connect);
 
-// play or pause
-app.get('/playpause/:connectID', playPause);
-
-// change play back time
-app.get('/settime/:connectID/:time', setTime);
-
-// change playback speed
-app.get('/setplaybackspeed/:connectID/:speed', setPlaybackSpeed);
+// will handel all changes.
+app.post('/update/:connectID', onUpdate);
 
 // change video file name
 app.get('/setfilename/:connectID/:filename', setFileName);

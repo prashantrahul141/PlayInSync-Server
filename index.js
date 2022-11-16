@@ -1,5 +1,5 @@
 // imports
-import { getAll, playPause, setTime, setPlaybackSpeed, setFileName, connect, getViewers, deleteAllViewers, } from './lib/callbackHandler.js';
+import { getAll, onUpdate, setFileName, connect, getViewers, deleteAllViewers, } from './lib/callbackHandler.js';
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
@@ -15,17 +15,14 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
+app.use(express.json());
 // Routes
 // pulling changes
 app.get('/:connectID', getAll);
 // new user connected
 app.post('/:connectID', connect);
-// play or pause
-app.get('/playpause/:connectID', playPause);
-// change play back time
-app.get('/settime/:connectID/:time', setTime);
-// change playback speed
-app.get('/setplaybackspeed/:connectID/:speed', setPlaybackSpeed);
+// will handel all changes.
+app.post('/update/:connectID', onUpdate);
 // change video file name
 app.get('/setfilename/:connectID/:filename', setFileName);
 // get all viwers.

@@ -53,43 +53,15 @@ export const getAll = (req: Request, res: Response) => {
   }
 };
 
-export const playPause = (req: Request, res: Response) => {
-  // for pause and play
+export const onUpdate = (req: Request, res: Response) => {
+  // handel all updates.
   ifExitsInConnections(req, res);
   const connectID = req.params.connectID;
   updateConnections(connectID);
-  playbackState.playState = !playbackState.playState;
-  res.status(200).json({ state: 'Success', ...playbackState });
-};
-
-export const setTime = (req: Request, res: Response) => {
-  // to update time
-  ifExitsInConnections(req, res);
-  const connectID = req.params.connectID;
-  updateConnections(connectID);
-  const time = req.params.time;
-  if (!time) {
-    res
-      .status(418)
-      .json({ state: 'Failure', message: 'Time parameter was empty.' });
-  }
-  playbackState.playbackTime = time;
-  res.status(200).json({ state: 'Success', ...playbackState });
-};
-
-export const setPlaybackSpeed = (req: Request, res: Response) => {
-  // to update playback speed
-  ifExitsInConnections(req, res);
-  const connectID = req.params.connectID;
-  updateConnections(connectID);
-  const speed = req.params.speed;
-  if (!speed) {
-    res
-      .status(418)
-      .json({ state: 'Failure', message: 'Speed parameter was empty.' });
-  }
-  playbackState.playbackSpeed = speed;
-  res.status(200).json({ state: 'Success', ...playbackState });
+  playbackState.playState = req.body.playState === 'true' ? true : false;
+  playbackState.playbackTime = parseFloat(req.body.playbackTime);
+  playbackState.playbackSpeed = parseFloat(req.body.playbackSpeed);
+  res.json({ state: 'Success', message: 'changes updated.' });
 };
 
 export const setFileName = (req: Request, res: Response) => {
