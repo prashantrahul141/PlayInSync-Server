@@ -58,7 +58,7 @@ export const onUpdate = (req: Request, res: Response) => {
   ifExitsInConnections(req, res);
   const connectID = req.params.connectID;
   updateConnections(connectID);
-  playbackState.playState = req.body.playState === 'true' ? true : false;
+  playbackState.playState = req.body.playState;
   playbackState.playbackTime = parseFloat(req.body.playbackTime);
   playbackState.playbackSpeed = parseFloat(req.body.playbackSpeed);
   res.json({ state: 'Success', message: 'changes updated.' });
