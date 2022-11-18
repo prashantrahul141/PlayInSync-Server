@@ -2,7 +2,7 @@
 
 # Server Code for PlayInSync
 
-This contains the server code for PlayInSync written in TypeScript using Express, Any changes made on the client (videoplayback) will be sent to the server and synced with all other clients.
+This contains the server code for PlayInSync written in TypeScript using Express and Socket.io, Any changes made on the client (videoplayback) will be sent to the server and synced with all other clients.
 
 ### How?
 
@@ -42,3 +42,4 @@ By default the app will listen to port 3000 and localhost, expose that to the in
 
 - TypeScript
 - Express
+- Socket.io
