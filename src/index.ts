@@ -1,21 +1,21 @@
-// imports
-import {
-  getAll,
-  onUpdate,
-  setFileName,
-  connect,
-  getViewers,
-  deleteAllViewers,
-} from './lib/callbackHandler.js';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
+import http from 'http';
+import { Server } from 'socket.io';
 import dotenv from 'dotenv';
 dotenv.config();
+import { PlaybackStateClass } from './lib/playbackState.js';
 
 // constants
 const PORT = process.env.PORT || 3000;
+
 // init.
+let playbackState = new PlaybackStateClass();
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: '*' },
+});
 app.use(morgan('dev'));
 app.use(function (req: Request, res: Response, next: NextFunction) {
   // adds cors
@@ -26,27 +26,40 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   );
   next();
 });
+
+// middleware
 app.use(express.json());
 
-// Routes
-// pulling changes
-app.get('/:connectID', getAll);
+// Initial Connect
+app.get('/', (req: Request, res: Response) => {
+  // Adds new viewers
+  res.status(200).json({ state: 'Success' });
+});
 
-// new user connected
-app.post('/:connectID', connect);
+// socket Connection
+io.on('connection', (socket) => {
+  console.log(`${socket.id} connected.`);
 
-// will handel all changes.
-app.post('/update/:connectID', onUpdate);
+  socket.emit('recieve-update', playbackState);
+  // on update.
+  socket.on(
+    'update',
+    (update: {
+      playState: boolean;
+      playbackTime: number;
+      playbackSpeed: number;
+    }) => {
+      // handel all updates.
+      console.log(`update recieved from ${socket.id}`);
 
-// change video file name
-app.get('/setfilename/:connectID/:filename', setFileName);
+      playbackState.playState = update.playState;
+      playbackState.playbackTime = update.playbackTime;
+      playbackState.playbackSpeed = update.playbackSpeed;
 
-// get all viwers.
-app.get('/allviewers/:connectID', getViewers);
-
-// delete all viwers.
-app.get('/deleteall/:connectID', deleteAllViewers);
+      socket.broadcast.emit('recieve-update', playbackState);
+    }
+  );
+});
 
 // listening.
-// @ts-ignore
-app.listen(PORT, '0.0.0.0', () => console.log('Listening...', PORT));
+server.listen(PORT, () => console.log('Listening...', PORT));
